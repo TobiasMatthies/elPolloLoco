@@ -18,13 +18,27 @@ class World {
     ]
     canvas;
     ctx;
+    keyboard;
 
-    constructor(canvas) {
+
+    constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
+        this.keyboard = keyboard;
         this.draw();
+        this.setWorld();
     }
 
+
+    setWorld() {
+        this.character.world = this;
+    }
+
+
+    /**
+     * 
+     * this function is used to draw all the elements
+     */
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -35,24 +49,39 @@ class World {
 
         let self = this;
         requestAnimationFrame(function () {
-            //self written function start
-            self.enemies.forEach(enemy => {
-                enemy.x = enemy.x -= 2;
-            });
-            //self written function end 
             self.draw();
         });
     }
 
 
+    /**
+     * 
+     * this function is used to add each object of an array to the map
+     * @param {Array} objects 
+     */
     addObjectsToMap(objects) {
         objects.forEach(o => {
-            this, this.addToMap(o);
-        })
+          this.addToMap(o);
+        });
     }
 
 
+    /**
+     * 
+     * this function is used to add a single object to the map
+     * @param {object} mo 
+     */
     addToMap(mo) {
+        /*if (mo.otherDirection) {
+            this.ctx.save();
+            this.ctx.translate(this.img.width, 0);
+            this.ctx.scale(-1, 1);
+        }*/
+
         this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+
+        /*if (mo.otherDirection) {
+            this.ctx.restore();
+        }*/
     }
 }

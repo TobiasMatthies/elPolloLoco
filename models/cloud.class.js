@@ -3,11 +3,20 @@ class Cloud extends MovableObject {
     y = 50;
     height = 800;
     width = 1800;
+    img = 'img/5.Fondo/Capas/4.nubes/1.png';
 
-   constructor() {
-       super().loadImage('img/5.Fondo/Capas/4.nubes/1.png');
+    constructor() {
+        super().loadImage('img/5.Fondo/Capas/4.nubes/1.png');
+        this.animate();
+    }
 
-       //this.x =  Math.random() * 1000;
-   }
+    /**
+     * 
+     * this function is used to move the clouds
+     */
+    animate() {
+       this.moveLeft();
+    }
+
 
 }
