@@ -2,23 +2,11 @@ class World {
 
 
     character = new Character();
-    enemies = [
-        new Chicken(),
-        new Chicken(),
-        new Chicken(),
-    ];
-    clouds = [
-        new Cloud()
-    ];
-    backgroundObjects = [
-        new BackgroundObject('img/5.Fondo/Capas/5.cielo_1920-1080px.png', 0, 0),
-        new BackgroundObject('img/5.Fondo/Capas/3.Fondo3/1.png', 0, 0),
-        new BackgroundObject('img/5.Fondo/Capas/2.Fondo2/1.png', 0, 0),
-        new BackgroundObject('img/5.Fondo/Capas/1.suelo-fondo1/1.png', 0, 0)
-    ]
+    level = level1;
     canvas;
     ctx;
     keyboard;
+    camera_x = 0;
 
 
     constructor(canvas, keyboard) {
@@ -30,6 +18,10 @@ class World {
     }
 
 
+    /**
+     * 
+     * this function sets the world of the character to this world
+     */
     setWorld() {
         this.character.world = this;
     }
@@ -42,10 +34,16 @@ class World {
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        this.addObjectsToMap(this.backgroundObjects);
+        this.ctx.translate(this.camera_x, 0);
+
+        this.addObjectsToMap(this.level.backgroundObjects);
+        this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.bottles);
         this.addToMap(this.character);
-        this.addObjectsToMap(this.enemies);
-        this.addObjectsToMap(this.clouds);
+        this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.clouds);
+
+        this.ctx.translate(-this.camera_x, 0);
 
         let self = this;
         requestAnimationFrame(function () {
@@ -72,16 +70,38 @@ class World {
      * @param {object} mo 
      */
     addToMap(mo) {
-        /*if (mo.otherDirection) {
-            this.ctx.save();
-            this.ctx.translate(this.img.width, 0);
-            this.ctx.scale(-1, 1);
-        }*/
+        if (mo.otherDirection) {
+           this.flipImage(mo);
+        }
 
         this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
 
-        /*if (mo.otherDirection) {
-            this.ctx.restore();
-        }*/
+        if (mo.otherDirection) {
+           this.flipBack(mo);
+        }
+    }
+
+
+    /**
+     * 
+     * this function is used to flip the image to the left
+     * @param {object} mo 
+     */
+    flipImage(mo) {
+        this.ctx.save();
+        this.ctx.translate(mo.width, 0);
+        this.ctx.scale(-1, 1);
+        mo.x = mo.x * -1;
+    }
+
+
+    /**
+     * 
+     * this function is used to flip the image back to the right
+     * @param {object} mo 
+     */
+    flipBack(mo) {
+        mo.x = mo.x * -1;
+        this.ctx.restore();
     }
 }

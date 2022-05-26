@@ -40,6 +40,14 @@ class MovableObject {
     }
 
 
+    playAnimation(images) {
+        let i = this.currentImage % images.length;
+                let path = images[i];
+                this.img.src = path;
+                this.currentImage++;
+    }
+
+
     moveRight() {
         setInterval( () => {
             this.x += this.speed;
