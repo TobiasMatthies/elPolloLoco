@@ -8,13 +8,32 @@ class MovableObject {
     currentImage = 0;
     speed = 0.3;
     otherDirection = false;
+    speedY = 0;
+    acceleration = 0.5;
+    walking_sound = new Audio('audio/step.mp3');
+    jumping_sound = new Audio('audio/jump.mp3');
 
 
     constructor() {
 
     }
 
-   
+
+    applyGravity() {
+        setInterval(() => {
+            if (this.isAboveGround() || this.speedY > 0) {
+                this.y -= this.speedY;
+                this.speedY -= this.acceleration;
+            }
+        }, 1000 / 60); 
+    }
+
+
+    isAboveGround() {
+        return this.y <= 450;
+    }
+
+
     /**
      * 
      * this function is used to load the first image
@@ -42,21 +61,25 @@ class MovableObject {
 
     playAnimation(images) {
         let i = this.currentImage % images.length;
-                let path = images[i];
-                this.img.src = path;
-                this.currentImage++;
+        let path = images[i];
+        this.img.src = path;
+        this.currentImage++;
     }
 
 
     moveRight() {
-        setInterval( () => {
-            this.x += this.speed;
-        }, 1000 / 60);
+        this.x += this.speed;
+        this.otherDirection = false;
     }
 
+
     moveLeft() {
-        setInterval( () => {
-            this.x -= this.speed;
-        }, 1000 / 60);
+       this.x -= this.speed;
+    }
+
+
+    jump() {
+        this.jumping_sound.play();
+        this.speedY = 14;
     }
 }
