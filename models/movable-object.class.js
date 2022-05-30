@@ -1,9 +1,9 @@
 class MovableObject {
     x = 120;
-    y = 780;
+    y = 450;
     img;
-    width = 120;
-    height = 120;
+    height = 450;
+    width = 250;
     imageCache = {};
     currentImage = 0;
     speed = 0.3;
@@ -12,6 +12,7 @@ class MovableObject {
     acceleration = 0.5;
     walking_sound = new Audio('audio/step.mp3');
     jumping_sound = new Audio('audio/jump.mp3');
+    energy = 100;
 
 
     constructor() {
@@ -42,6 +43,28 @@ class MovableObject {
     loadImage(path) {
         this.img = new Image();
         this.img.src = path;
+    }
+
+
+    draw(ctx) {
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    }
+
+
+    drawBorder(ctx) {
+        ctx.lineWidth = '5';
+        ctx.beginPath();
+        ctx.strokeStyle = 'blue';
+        ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.stroke();
+    }
+
+
+    isColliding(mo) {
+      return this.x + this.width > mo.x &&
+      this.y + this.height > mo.y &&
+      this.x < mo.x &&
+      this.y < mo.y + mo.height;
     }
 
 
@@ -80,6 +103,12 @@ class MovableObject {
 
     jump() {
         this.jumping_sound.play();
-        this.speedY = 14;
+        this.speedY = 18;
+    }
+
+    hit() {
+        if (this.energy > 0) {
+            this.energy -= 5;
+            }
     }
 }

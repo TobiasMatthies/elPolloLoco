@@ -1,4 +1,7 @@
 class Chicken extends MovableObject {
+    y = 780;
+    width = 120;
+    height = 120;
     speed = 1 + Math.random() * 0.25;
     IMAGES_WALKING = [
         'img/3.Secuencias_Enemy_b sico/Versi¢n_Gallinita (estas salen por orden de la gallina gigantona)/1.Ga_paso_derecho.png',

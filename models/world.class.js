@@ -15,6 +15,7 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
+        this.checkCollisions();
     }
 
 
@@ -24,6 +25,22 @@ class World {
      */
     setWorld() {
         this.character.world = this;
+    }
+
+
+    /**
+     * 
+     * checking if character is colliding with enemies
+     */
+    checkCollisions() {
+        setInterval(() => {
+            this.level.enemies.forEach((enemy) => {
+                if (this.character.isColliding(enemy)) {
+                    this.character.hit();
+                    console.log('collision with Character, energy:', this.character.energy);
+                }
+            });
+        }, 200);
     }
 
 
@@ -59,7 +76,7 @@ class World {
      */
     addObjectsToMap(objects) {
         objects.forEach(o => {
-          this.addToMap(o);
+            this.addToMap(o);
         });
     }
 
@@ -71,13 +88,16 @@ class World {
      */
     addToMap(mo) {
         if (mo.otherDirection) {
-           this.flipImage(mo);
+            this.flipImage(mo);
+        }
+        mo.draw(this.ctx);
+
+        if (mo instanceof Character || mo instanceof Chicken) {
+            mo.drawBorder(this.ctx);
         }
 
-        this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
-
         if (mo.otherDirection) {
-           this.flipBack(mo);
+            this.flipBack(mo);
         }
     }
 

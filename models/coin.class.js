@@ -1,11 +1,11 @@
 class Coin extends CollectableItem{
-    y = 500 - Math.random() * 100;
-    height = 200;
-    width = 200;
+    height = 160;
+    width = 160;
 
 
-    constructor(imagePath, x) {
+    constructor(imagePath, x, y) {
         super().loadImage(imagePath);
         this.x = x;
+        this.y = y;
     }
 }

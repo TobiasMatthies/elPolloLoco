@@ -15,4 +15,14 @@ class CollectableItem {
         this.img = new Image();
         this.img.src = path;
     }
+
+
+    /**
+     * 
+     * draw the image
+     * @param {context} ctx 
+     */
+    draw(ctx) {
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    }
 }

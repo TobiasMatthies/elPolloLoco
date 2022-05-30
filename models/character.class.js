@@ -1,8 +1,4 @@
 class Character extends MovableObject {
-    height = 450;
-    width = 250;
-    y = 450;
-
     IMAGES_WALKING = [
         'img/2.Secuencias_Personaje-Pepe-correcciขn/2.Secuencia_caminata/W-21.png',
         'img/2.Secuencias_Personaje-Pepe-correcciขn/2.Secuencia_caminata/W-22.png',
@@ -13,14 +9,28 @@ class Character extends MovableObject {
     ];
 
     IMAGES_JUMPING = [
-        'img/2.Secuencias_Personaje-Pepe-correcciขn/3.Secuencia_salto/J-33.png',
         'img/2.Secuencias_Personaje-Pepe-correcciขn/3.Secuencia_salto/J-34.png',
         'img/2.Secuencias_Personaje-Pepe-correcciขn/3.Secuencia_salto/J-35.png',
         'img/2.Secuencias_Personaje-Pepe-correcciขn/3.Secuencia_salto/J-36.png',
         'img/2.Secuencias_Personaje-Pepe-correcciขn/3.Secuencia_salto/J-37.png',
         'img/2.Secuencias_Personaje-Pepe-correcciขn/3.Secuencia_salto/J-38.png',
         'img/2.Secuencias_Personaje-Pepe-correcciขn/3.Secuencia_salto/J-39.png',
-        'img/2.Secuencias_Personaje-Pepe-correcciขn/3.Secuencia_salto/J-40.png'
+    ];
+
+    IMAGES_HURT = [
+        'img/2.Secuencias_Personaje-Pepe-correcciขn/4.Herido/H-41.png',
+        'img/2.Secuencias_Personaje-Pepe-correcciขn/4.Herido/H-42.png',
+        'img/2.Secuencias_Personaje-Pepe-correcciขn/4.Herido/H-43.png',
+    ];
+
+    IMAGES_DYING = [
+        'img/2.Secuencias_Personaje-Pepe-correcciขn/5.Muerte/D-51.png',
+        'img/2.Secuencias_Personaje-Pepe-correcciขn/5.Muerte/D-52.png',
+        'img/2.Secuencias_Personaje-Pepe-correcciขn/5.Muerte/D-53.png',
+        'img/2.Secuencias_Personaje-Pepe-correcciขn/5.Muerte/D-54.png',
+        'img/2.Secuencias_Personaje-Pepe-correcciขn/5.Muerte/D-55.png',
+        'img/2.Secuencias_Personaje-Pepe-correcciขn/5.Muerte/D-56.png',
+        'img/2.Secuencias_Personaje-Pepe-correcciขn/5.Muerte/D-57.png',
     ];
 
     world;
@@ -61,15 +71,37 @@ class Character extends MovableObject {
         }, 1000 / 60);
 
         setInterval(() => {
-            if (this.isAboveGround()) {
+            if (this.isDead()) {
+                this.playAnimation(this.IMAGES_DYING);
+            } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
             }
-        }, 136.65);
+        }, 195);
 
         setInterval(() => {
-                if (keyboard.ArrowRight && !this.isAboveGround() || keyboard.ArrowLeft && !this.isAboveGround()) {
+                if (this.isRunning()) {
                     this.playAnimation(this.IMAGES_WALKING);
                 };
         }, 80);
+    }
+
+
+    /**
+     * 
+     * checking if character is dead
+     * @returns value of energy = 0
+     */
+    isDead() {
+        return this.energy == 0;
+    }
+
+
+    /**
+     * 
+     * checking if character is alive, on the ground and running
+     * @returns character is running and not in the air or dead
+     */
+    isRunning() {
+        return keyboard.ArrowRight && !this.isAboveGround() && !this.isDead() || keyboard.ArrowLeft && !this.isAboveGround() && !this.isDead();
     }
 }

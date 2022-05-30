@@ -42,9 +42,29 @@ const level1 = new Level(
         new Bottle('img/6.botella/2.Botella_enterrada2.png', 4700 + Math.random() * 200)
     ],
     [
-        new Coin('img/8.Coin/Moneda2.png', 600 + Math.random() * 400),
-        new Coin('img/8.Coin/Moneda2.png', 1600 + Math.random() * 400),
-        new Coin('img/8.Coin/Moneda2.png', 2600 + Math.random() * 400),
-        new Coin('img/8.Coin/Moneda2.png', 3600 + Math.random() * 400),
-        new Coin('img/8.Coin/Moneda2.png', 4600 + Math.random() * 400)
+        new Coin('img/8.Coin/Moneda2.png', 620, 480),
+        new Coin('img/8.Coin/Moneda2.png', 680, 400),
+        new Coin('img/8.Coin/Moneda2.png', 760, 320),
+        new Coin('img/8.Coin/Moneda2.png', 860, 280),
+        new Coin('img/8.Coin/Moneda2.png', 960, 320),
+        new Coin('img/8.Coin/Moneda2.png', 1040, 400),
+        new Coin('img/8.Coin/Moneda2.png', 1100, 480),
+
+        new Coin('img/8.Coin/Moneda2.png', 1800, 600),
+        new Coin('img/8.Coin/Moneda2.png', 2000, 600),
+        new Coin('img/8.Coin/Moneda2.png', 2200, 600),
+        new Coin('img/8.Coin/Moneda2.png', 2400, 600),
+        new Coin('img/8.Coin/Moneda2.png', 2600, 600),
+
+        new Coin('img/8.Coin/Moneda2.png', 3120, 480),
+        new Coin('img/8.Coin/Moneda2.png', 3180, 400),
+        new Coin('img/8.Coin/Moneda2.png', 3260, 320),
+        new Coin('img/8.Coin/Moneda2.png', 3360, 280),
+        new Coin('img/8.Coin/Moneda2.png', 3460, 320),
+        new Coin('img/8.Coin/Moneda2.png', 3540, 400),
+        new Coin('img/8.Coin/Moneda2.png', 3600, 480),
+
+        new Coin('img/8.Coin/Moneda2.png', 4000, 600),
+        new Coin('img/8.Coin/Moneda2.png', 4200, 600),
+        new Coin('img/8.Coin/Moneda2.png', 4400, 600),
     ]);
