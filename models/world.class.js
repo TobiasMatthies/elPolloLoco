@@ -1,12 +1,13 @@
 class World {
-
-
     character = new Character();
     level = level1;
     canvas;
     ctx;
     keyboard;
     camera_x = 0;
+    bottleBar = new BottleBar(20);
+    healthBar = new HealthBar(100);
+    coinBar = new CoinBar(180);
 
 
     constructor(canvas, keyboard) {
@@ -32,12 +33,33 @@ class World {
      * 
      * checking if character is colliding with enemies
      */
-    checkCollisions() {
+     checkCollisions() {
         setInterval(() => {
+            //collision with enemies
             this.level.enemies.forEach((enemy) => {
                 if (this.character.isColliding(enemy)) {
                     this.character.hit();
-                    console.log('collision with Character, energy:', this.character.energy);
+                    this.healthBar.setPercentage(this.character.energy, this.healthBar.IMAGES);
+                }
+            });
+
+            //collision with coins
+            this.level.coins.forEach((coin) => {
+                if(this.character.isColliding(coin)) {
+                    this.character.coins += 5;
+                    this.coinBar.setPercentage(this.character.coins, this.coinBar.IMAGES);
+                    let coinPosition = this.level.coins.indexOf(coin);
+                    this.level.coins.splice(coinPosition, 1);
+                }
+            });
+
+            //collision with bottles
+            this.level.bottles.forEach((bottle) => {
+                if(this.character.isColliding(bottle)) {
+                    this.character.bottles += 20;
+                    this.bottleBar.setPercentage(this.character.bottles, this.bottleBar.IMAGES);
+                    let bottlePosition = this.level.bottles.indexOf(bottle);
+                    this.level.bottles.splice(bottlePosition, 1);
                 }
             });
         }, 200);
@@ -55,11 +77,18 @@ class World {
 
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
+
+        this.ctx.translate(-this.camera_x, 0);
+        //----- space for fixed objects -----
+        this.addToMap(this.bottleBar);
+        this.addToMap(this.healthBar);
+        this.addToMap(this.coinBar);
+        this.ctx.translate(this.camera_x, 0);
+
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.bottles);
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
-
         this.ctx.translate(-this.camera_x, 0);
 
         let self = this;
@@ -92,7 +121,7 @@ class World {
         }
         mo.draw(this.ctx);
 
-        if (mo instanceof Character || mo instanceof Chicken) {
+        if (mo instanceof Character || mo instanceof Coin || mo instanceof Bottle) {
             mo.drawBorder(this.ctx);
         }
 

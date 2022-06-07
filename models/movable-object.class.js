@@ -1,11 +1,4 @@
-class MovableObject {
-    x = 120;
-    y = 450;
-    img;
-    height = 450;
-    width = 250;
-    imageCache = {};
-    currentImage = 0;
+class MovableObject extends DrawableObject {
     speed = 0.3;
     otherDirection = false;
     speedY = 0;
@@ -13,23 +6,32 @@ class MovableObject {
     walking_sound = new Audio('audio/step.mp3');
     jumping_sound = new Audio('audio/jump.mp3');
     energy = 100;
+    lastHit = 0;
 
 
-    constructor() {
+    //constructor() {
 
-    }
+    //}
 
 
+    /**
+     * 
+     * applying gravity to object above ground
+     */
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
             }
-        }, 1000 / 60); 
+        }, 1000 / 60);
     }
 
 
+    /**
+     * 
+     * @returns object above ground
+     */
     isAboveGround() {
         return this.y <= 450;
     }
@@ -37,51 +39,37 @@ class MovableObject {
 
     /**
      * 
-     * this function is used to load the first image
-     * @param {string} path 
+     * drawing blue border around objects for orientation
+     * @param {context} ctx 
      */
-    loadImage(path) {
-        this.img = new Image();
-        this.img.src = path;
-    }
+         drawBorder(ctx) {
+            ctx.lineWidth = '5';
+            ctx.beginPath();
+            ctx.strokeStyle = 'blue';
+            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.stroke();
+        }
 
 
-    draw(ctx) {
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-    }
-
-
-    drawBorder(ctx) {
-        ctx.lineWidth = '5';
-        ctx.beginPath();
-        ctx.strokeStyle = 'blue';
-        ctx.rect(this.x, this.y, this.width, this.height);
-        ctx.stroke();
-    }
-
-
+    /**
+     * 
+     * checking if object is colliding with enemy
+     * @param {object} mo 
+     * @returns object is colliding with enemy
+     */
     isColliding(mo) {
-      return this.x + this.width > mo.x &&
-      this.y + this.height > mo.y &&
-      this.x < mo.x &&
-      this.y < mo.y + mo.height;
+        return this.x + this.width > mo.x &&
+            this.y + this.height > mo.y &&
+            this.x < mo.x &&
+            this.y < mo.y + mo.height;
     }
 
 
     /**
      * 
-     * @param {Array} array 
+     * playing animation for object
+     * @param {array} images 
      */
-    loadImages(array) {
-        array.forEach((path) => {
-            let img = new Image();
-            img.src = path;
-            this.imageCache[path] = path;
-        });
-
-    }
-
-
     playAnimation(images) {
         let i = this.currentImage % images.length;
         let path = images[i];
@@ -90,25 +78,54 @@ class MovableObject {
     }
 
 
+    /**
+     * 
+     * moving the object to the right
+     */
     moveRight() {
         this.x += this.speed;
         this.otherDirection = false;
     }
 
 
+    /**
+     * 
+     * moving the object to the left
+     */
     moveLeft() {
-       this.x -= this.speed;
+        this.x -= this.speed;
     }
 
 
+    /**
+     * 
+     * setting the speedY of an object to 18 and letting it jump
+     */
     jump() {
         this.jumping_sound.play();
         this.speedY = 18;
     }
 
+
+    /**
+     * 
+     * reducing the energy and setting the time of the last hit
+     */
     hit() {
         if (this.energy > 0) {
             this.energy -= 5;
-            }
+            this.lastHit = new Date().getTime();
+        }
+    }
+
+
+    /**
+     * 
+     * checking the time passed since the last hit
+     */
+    isHurt() {
+        let timePassed = new Date().getTime() - this.lastHit; //time passed in ms
+        timePassed = timePassed / 1000; //time passed in seconds
+        return timePassed < 0.5;
     }
 }

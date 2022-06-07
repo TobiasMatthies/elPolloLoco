@@ -3,4 +3,5 @@ class Keyboard {
     ArrowRight = false;
     ArrowUp = false;
     Space = false;
+    d = false;
 }

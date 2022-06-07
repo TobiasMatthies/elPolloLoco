@@ -35,11 +35,15 @@ class Character extends MovableObject {
 
     world;
     speed = 10;
+    coins = 0;
+    bottles = 0;
 
     constructor() {
         super().loadImage('img/2.Secuencias_Personaje-Pepe-correcciขn/1.IDLE/IDLE/I-1.png');
-        this.loadImages(this.IMAGES_WALKING);
+        /*this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_JUMPING);
+        this.loadImages(this.IMAGES_HURT);
+        this.loadImages(this.IMAGES_DYING);*/
         this.applyGravity();
         this.animate();
     }
@@ -73,6 +77,8 @@ class Character extends MovableObject {
         setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DYING);
+            } else if (this.isHurt()) {
+                this.playAnimation(this.IMAGES_HURT);
             } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
             }
@@ -98,10 +104,10 @@ class Character extends MovableObject {
 
     /**
      * 
-     * checking if character is alive, on the ground and running
+     * checking if character is alive, on the ground, not hurt and running
      * @returns character is running and not in the air or dead
      */
     isRunning() {
-        return keyboard.ArrowRight && !this.isAboveGround() && !this.isDead() || keyboard.ArrowLeft && !this.isAboveGround() && !this.isDead();
+        return keyboard.ArrowRight && !this.isAboveGround() && !this.isHurt() && !this.isDead() || keyboard.ArrowLeft && !this.isAboveGround() && !this.isHurt() && !this.isDead();
     }
 }
