@@ -9,9 +9,9 @@ class MovableObject extends DrawableObject {
     lastHit = 0;
 
 
-    //constructor() {
-
-    //}
+    constructor() {
+      super();
+    }
 
 
     /**
@@ -33,7 +33,11 @@ class MovableObject extends DrawableObject {
      * @returns object above ground
      */
     isAboveGround() {
+        if (this instanceof Character) {
         return this.y <= 450;
+        } else if (this instanceof ThrowableObject) {
+            return this.y <= 760;
+        }
     }
 
 

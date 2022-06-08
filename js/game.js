@@ -14,7 +14,7 @@ document.addEventListener("keydown", (e) => {
   let key = e['code'];
 
   if(keyCode == 37 || keyCode == 38 || keyCode == 39 || keyCode == 32 || keyCode == 68) {
-  keyboard[`${key}`] = true;
+  keyboard[key] = true;
   }
 });
 
@@ -24,6 +24,6 @@ document.addEventListener("keyup", (e) => {
   let key = e['code'];
 
   if(keyCode == 37 || keyCode == 38 || keyCode == 39 || keyCode == 32 || keyCode == 68) {
-  keyboard[`${key}`] = false;
+  keyboard[key] = false;
   }
 });
