@@ -22,7 +22,7 @@ class DrawableObject {
     /**
      * 
      * drawing the image
-     * @param {context} ctx 
+     * @param {CanvasRenderingContext2D} ctx 
      */
     draw(ctx) {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
@@ -37,7 +37,7 @@ class DrawableObject {
         array.forEach((path) => {
             let img = new Image();
             img.src = path;
-            this.imageCache[path] = path;
+            this.imageCache[path] = img;
         });
     }
 }

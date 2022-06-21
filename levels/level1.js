@@ -1,12 +1,23 @@
-const level1 = new Level(
+let level1;
+function initLevel() {
+
+level1 = new Level(
     [
         new Chicken(),
         new Chicken(),
         new Chicken(),
+        new Chicken(),
+        new Chicken(),
+        new Chick(),
+        new Chick(),
+        new Chick(),
+        new Chick(),
         new Endboss()
     ],
     [
-        new Cloud()
+        new Cloud(0, '1.png'),
+        new Cloud(1799, '2.png'),
+        new Cloud(3598, '1.png')
     ],
     [
         new BackgroundObject('img/5.Fondo/Capas/5.cielo_1920-1080px.png', -1799, 0),
@@ -66,3 +77,4 @@ const level1 = new Level(
         new Coin('img/8.Coin/Moneda2.png', 4200, 600),
         new Coin('img/8.Coin/Moneda2.png', 4400, 600),
     ]);
+}

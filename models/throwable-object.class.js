@@ -26,6 +26,7 @@ class ThrowableObject extends MovableObject {
         this.loadImages(this.IMAGES_SHATTERING);
         this.loadImage(this.IMAGES_FLYING[0]);
         this.x = x;
+        Object.freeze(this.x);
         this.y = y;
         this.throw(100, 500);
         this.animate();
@@ -66,6 +67,6 @@ class ThrowableObject extends MovableObject {
 
     deleteObject(intervall) {
         clearInterval(intervall);
-        world.throwableObjects.splice(0);
+        world.throwableObjects.pop();
     }
 }

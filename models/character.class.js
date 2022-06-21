@@ -40,10 +40,10 @@ class Character extends MovableObject {
 
     constructor() {
         super().loadImage('img/2.Secuencias_Personaje-Pepe-correcciขn/1.IDLE/IDLE/I-1.png');
-        /*this.loadImages(this.IMAGES_WALKING);
+        this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_HURT);
-        this.loadImages(this.IMAGES_DYING);*/
+        this.loadImages(this.IMAGES_DYING);
         this.applyGravity();
         this.animate();
     }

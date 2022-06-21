@@ -52,9 +52,11 @@ class World {
      */
     checkCollisionsEnemies() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
+            if (this.character.isColliding(enemy) && this.character.speedY > -0.1) {
                 this.character.hit();
                 this.healthBar.setPercentage(this.character.energy, this.healthBar.IMAGES);
+            } else if(this.character.isColliding(enemy) && this.character.speedY < 0) {
+                console.log('enemy hit');
             }
         });
     }
@@ -105,6 +107,10 @@ class World {
 
                 if (bottle.isColliding(e)) {
                     console.log('collision with bottle');
+
+                    if (e instanceof Endboss) {
+                        e.energy -= 33;
+                    }
                 }
             }
         })
@@ -187,10 +193,6 @@ class World {
             this.flipImage(mo);
         }
         mo.draw(this.ctx);
-
-        /*if (mo instanceof Character || mo instanceof Coin || mo instanceof Bottle) {
-            mo.drawBorder(this.ctx);
-        }*/
 
         if (mo.otherDirection) {
             this.flipBack(mo);

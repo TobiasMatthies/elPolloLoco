@@ -9,3 +9,26 @@ body {
 canvas {
     background-color: black;
 }
+
+#intro_image {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.d-none {
+    display: none;
+}
+
+#intro_span {
+    color: white;
+    font-size: 50px;
+    position: absolute;
+    top: 70%;
+    z-index: 2;
+    font-family: 'Roboto', sans-serif;
+}
