@@ -52,13 +52,35 @@ class World {
      */
     checkCollisionsEnemies() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && this.character.speedY > -0.1) {
+            if (this.character.isColliding(enemy) && this.character.speedY > -0.1 && enemy.isAlive) {
                 this.character.hit();
                 this.healthBar.setPercentage(this.character.energy, this.healthBar.IMAGES);
-            } else if(this.character.isColliding(enemy) && this.character.speedY < 0) {
-                console.log('enemy hit');
+
+            } else if (this.character.isColliding(enemy) && this.character.speedY < 0 && !enemy.isHit) {
+                if (enemy instanceof Chicken || enemy instanceof Chick) {
+                    this.killEnemy(enemy);
+                }
             }
         });
+    }
+
+
+    /**
+     * 
+     * showing the dying animation of an enemy and removing it from the game
+     * @param {object} enemy 
+     */
+    killEnemy(enemy) {
+        enemy.isHit = true;
+        enemy.isAlive = false;
+
+        if (enemy instanceof Chicken || enemy instanceof Chick) {
+            enemy.img = enemy.IMAGE_DYING;
+        } else {
+            enemy.playAnimation(enemy.IMAGES_DYING);
+        }
+
+        setTimeout(this.removeDeadEnemies, 2000, this);
     }
 
 
@@ -106,10 +128,17 @@ class World {
                 let bottle = this.throwableObjects[0];
 
                 if (bottle.isColliding(e)) {
-                    console.log('collision with bottle');
 
-                    if (e instanceof Endboss) {
-                        e.energy -= 33;
+                    if (e instanceof Chicken || e instanceof Chick) {
+                        this.killEnemy(e);
+                    } else {
+
+                        if (e.energy > 0) {
+                            e.energy -= 33;
+                        } else {
+                            this.killEnemy(e);  
+                        }
+
                     }
                 }
             }
@@ -131,6 +160,11 @@ class World {
 
             }
         }
+    }
+
+
+    removeDeadEnemies(world) {
+        world.level.enemies = world.level.enemies.filter((e) => e.isAlive);
     }
 
 

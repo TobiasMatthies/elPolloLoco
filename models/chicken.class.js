@@ -8,14 +8,16 @@ class Chicken extends MovableObject {
         'img/3.Secuencias_Enemy_b sico/Versi¢n_Gallinita (estas salen por orden de la gallina gigantona)/2-Ga_centro.png',
         'img/3.Secuencias_Enemy_b sico/Versi¢n_Gallinita (estas salen por orden de la gallina gigantona)/3.Ga_paso izquierdo.png'
     ];
-    IMAGE_DYING = 'img/3.Secuencias_Enemy_b sico/Versi¢n_Gallinita (estas salen por orden de la gallina gigantona)/4.G_muerte.png';
-    
+    IMAGE_DYING = new Image();
+    isHit = false;
+
 
 
     constructor() {
         super().loadImage('img/3.Secuencias_Enemy_b sico/Versi¢n_Gallinita (estas salen por orden de la gallina gigantona)/1.Ga_paso_derecho.png');
         this.loadImages(this.IMAGES_WALKING);
-        this.x = 100 + Math.random() * 6000;
+        this.IMAGE_DYING.src = 'img/3.Secuencias_Enemy_b sico/Versi¢n_Gallinita (estas salen por orden de la gallina gigantona)/4.G_muerte.png';
+        this.x = 300 + Math.random() * 6000;
         this.animate();
     }
 
@@ -25,11 +27,15 @@ class Chicken extends MovableObject {
      */
     animate() {
         setInterval(() => {
-            this.moveLeft();
+            if (this.isAlive) {
+                this.moveLeft();
+            }
         }, 1000 / 60);
 
         setInterval(() => {
-            this.playAnimation(this.IMAGES_WALKING);
+            if (this.isAlive) {
+                this.playAnimation(this.IMAGES_WALKING);
+            }
         }, 140);
     }
 }

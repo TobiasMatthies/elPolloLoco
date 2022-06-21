@@ -7,6 +7,7 @@ class MovableObject extends DrawableObject {
     jumping_sound = new Audio('audio/jump.mp3');
     energy = 100;
     lastHit = 0;
+    isAlive = true;
 
 
     constructor() {
@@ -23,6 +24,8 @@ class MovableObject extends DrawableObject {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
+            } else {
+                this.speedY = 0;
             }
         }, 1000 / 60);
     }
@@ -34,9 +37,9 @@ class MovableObject extends DrawableObject {
      */
     isAboveGround() {
         if (this instanceof Character) {
-        return this.y <= 450;
+        return this.y < 449.9;
         } else if (this instanceof ThrowableObject) {
-            return this.y <= 760;
+            return this.y < 759.9;
         }
     }
 
