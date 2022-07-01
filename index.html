@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,12 +28,43 @@
     <script src="models/bottle-bar.class.js"></script>
     <script src="models/coin-bar.class.js"></script>
     <script src="levels/level1.js"></script>
+    <script src="js/eventListeners.js"></script>
     <script src="js/game.js"></script>
 </head>
 
 <body onload="animateIntroSpan()">
-    <span id="intro_span">Click anywhere to start</span>
-    <img onclick="init()" id="intro_image" src="img/9.Intro _ Outro Image/Start Screen/Opciขn 1.png">
+    <span onclick="init()" id="intro_span">Click anywhere to start</span>
+    <img onclick="init()" class="fullscreen_image" id="intro_image"
+        src="img/9.Intro _ Outro Image/Start Screen/Opciขn 1.png">
+
     <canvas id="canvas" height="1000" width="1800"></canvas>
+
+    <div class="button_container" id="left_button_container">
+        <button class="mobile_button" id="left">
+            <img class="button_icon" src="./img/left.svg">
+        </button>
+
+        <button class="mobile_button" id="right">
+            <img class="button_icon" src="./img/right.svg">
+        </button>
+    </div>
+
+    <div class="button_container" id="right_button_container">
+        <button class="mobile_button" id="jump">
+            <img class="button_icon" src="./img/jump.svg">
+        </button>
+
+        <button class="mobile_button" id="throw">
+            <img class="button_icon" src="./img/attack.svg">
+        </button>
+    </div>
+
+    <img onclick="init()" src="img/9.Intro _ Outro Image/_Game over_ screen/4.Game over!.png" class="fullscreen_image d-none"
+        id="game_over_screen">
+
+
+
+    <a id="attribution" href="https://www.freepik.com/vectors/desert">Desert vector created by upklyak - www.freepik.com</a>
 </body>
+
 </html>

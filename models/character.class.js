@@ -37,13 +37,16 @@ class Character extends MovableObject {
     speed = 10;
     coins = 0;
     bottles = 0;
+    level = level1;
 
+    
     constructor() {
         super().loadImage('img/2.Secuencias_Personaje-Pepe-correcciขn/1.IDLE/IDLE/I-1.png');
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DYING);
+        this.IMAGE_STANDING.src = 'img/2.Secuencias_Personaje-Pepe-correcciขn/1.IDLE/IDLE/I-1.png';
         this.applyGravity();
         this.animate();
     }
@@ -51,49 +54,53 @@ class Character extends MovableObject {
     /**
      * 
      * this function is used to animate the character
+     * line 60, 87, 99: as long as there are enemies, character is able to move, meaning that when the game is over the character cannot move anymore.
      */
     animate() {
         setInterval(() => {
             this.walking_sound.pause();
 
-            if (keyboard.ArrowRight && this.x < this.world.level.level_end_x) {
-                this.moveRight();
-                this.walking_sound.play();
-            };
+            if (this.level.enemies) {
+                if (keyboard.ArrowRight && this.x < this.world.level.level_end_x) {
+                    this.moveRight();
+                    this.walking_sound.play();
+                };
 
-            if (keyboard.ArrowLeft && this.x > this.world.level.level_start_x) {
-                this.otherDirection = true;
-                this.moveLeft();
-                this.walking_sound.play();
-            };
+                if (keyboard.ArrowLeft && this.x > this.world.level.level_start_x) {
+                    this.otherDirection = true;
+                    this.moveLeft();
+                    this.walking_sound.play();
+                };
 
-            if (keyboard.Space && !this.isAboveGround()) {
-                this.jump();
-            }
-
-            if (keyboard.KeyD) {
-                if (this.bottles > 0) {
-                    //this.world.throwabjeObject = new ThrowableObject(this.x);
+                if (keyboard.Space && !this.isAboveGround()) {
+                    this.jump();
                 }
-            }
 
-            this.world.camera_x = -this.x + 200;
+                this.world.camera_x = -this.x + 200;
+            }
         }, 1000 / 60);
 
         setInterval(() => {
-            if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DYING);
-            } else if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURT);
-            } else if (this.isAboveGround()) {
-                this.playAnimation(this.IMAGES_JUMPING);
+            if (this.level.enemies) {
+                if (this.isDead()) {
+                    this.playAnimation(this.IMAGES_DYING);
+                    this.isAlive = false;
+                    
+                    setTimeout(() => {this.level.enemies = undefined;}, 2000);
+                } else if (this.isHurt()) {
+                    this.playAnimation(this.IMAGES_HURT);
+                } else if (this.isAboveGround()) {
+                    this.playAnimation(this.IMAGES_JUMPING);
+                }
             }
         }, 195);
 
         setInterval(() => {
-                if (this.isRunning()) {
+            if (this.level.enemies) {
+                if (this.isRunning() && this.isAlive) {
                     this.playAnimation(this.IMAGES_WALKING);
                 };
+            }
         }, 80);
     }
 

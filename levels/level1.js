@@ -20,30 +20,30 @@ level1 = new Level(
         new Cloud(3598, '1.png')
     ],
     [
-        new BackgroundObject('img/5.Fondo/Capas/5.cielo_1920-1080px.png', -1799, 0),
-        new BackgroundObject('img/5.Fondo/Capas/3.Fondo3/2.png', -1799, 0),
-        new BackgroundObject('img/5.Fondo/Capas/2.Fondo2/2.png', -1799, 0),
-        new BackgroundObject('img/5.Fondo/Capas/1.suelo-fondo1/2.png', -1799, 0),
+        new BackgroundObject('img/5.Fondo/Capas/5.cielo_1920-1080px.png', -1799, 0, 0),
+        new BackgroundObject('img/5.Fondo/Capas/5.cielo_1920-1080px.png', 0, 0, 0),
+        new BackgroundObject('img/5.Fondo/Capas/5.cielo_1920-1080px.png', 1799, 0, 0),
+        new BackgroundObject('img/5.Fondo/Capas/5.cielo_1920-1080px.png', 3598, 0, 0),
+        new BackgroundObject('img/5.Fondo/Capas/5.cielo_1920-1080px.png', 5397, 0, 0),
 
-        new BackgroundObject('img/5.Fondo/Capas/5.cielo_1920-1080px.png', 0, 0),
-        new BackgroundObject('img/5.Fondo/Capas/3.Fondo3/1.png', 0, 0),
-        new BackgroundObject('img/5.Fondo/Capas/2.Fondo2/1.png', 0, 0),
-        new BackgroundObject('img/5.Fondo/Capas/1.suelo-fondo1/1.png', 0, 0),
+        new BackgroundObject('img/5.Fondo/Capas/3.Fondo3/2.png', -1799, 0, 2),
+        new BackgroundObject('img/5.Fondo/Capas/3.Fondo3/1.png', 0, 0, 2),
+        new BackgroundObject('img/5.Fondo/Capas/3.Fondo3/2.png', 1799, 0, 2),
+        new BackgroundObject('img/5.Fondo/Capas/3.Fondo3/1.png', 3598, 0, 2),
+        new BackgroundObject('img/5.Fondo/Capas/3.Fondo3/2.png', 5397, 0, 2),
+        
 
-        new BackgroundObject('img/5.Fondo/Capas/5.cielo_1920-1080px.png', 1799, 0),
-        new BackgroundObject('img/5.Fondo/Capas/3.Fondo3/2.png', 1799, 0),
-        new BackgroundObject('img/5.Fondo/Capas/2.Fondo2/2.png', 1799, 0),
-        new BackgroundObject('img/5.Fondo/Capas/1.suelo-fondo1/2.png', 1799, 0),
+        new BackgroundObject('img/5.Fondo/Capas/2.Fondo2/2.png', -1799, 0, 1),
+        new BackgroundObject('img/5.Fondo/Capas/2.Fondo2/1.png', 0, 0, 1),
+        new BackgroundObject('img/5.Fondo/Capas/2.Fondo2/2.png', 1799, 0, 1),
+        new BackgroundObject('img/5.Fondo/Capas/2.Fondo2/1.png', 3598, 0, 1),
+        new BackgroundObject('img/5.Fondo/Capas/2.Fondo2/2.png', 5397, 0, 1),
 
-        new BackgroundObject('img/5.Fondo/Capas/5.cielo_1920-1080px.png', 3598, 0),
-        new BackgroundObject('img/5.Fondo/Capas/3.Fondo3/1.png', 3598, 0),
-        new BackgroundObject('img/5.Fondo/Capas/2.Fondo2/1.png', 3598, 0),
-        new BackgroundObject('img/5.Fondo/Capas/1.suelo-fondo1/1.png', 3598, 0),
-
-        new BackgroundObject('img/5.Fondo/Capas/5.cielo_1920-1080px.png', 5397, 0),
-        new BackgroundObject('img/5.Fondo/Capas/3.Fondo3/2.png', 5397, 0),
-        new BackgroundObject('img/5.Fondo/Capas/2.Fondo2/2.png', 5397, 0),
-        new BackgroundObject('img/5.Fondo/Capas/1.suelo-fondo1/2.png', 5397, 0)
+        new BackgroundObject('img/5.Fondo/Capas/1.suelo-fondo1/2.png', -1799, 0, 0),
+        new BackgroundObject('img/5.Fondo/Capas/1.suelo-fondo1/1.png', 0, 0, 0),
+        new BackgroundObject('img/5.Fondo/Capas/1.suelo-fondo1/2.png', 1799, 0, 0),
+        new BackgroundObject('img/5.Fondo/Capas/1.suelo-fondo1/1.png', 3598, 0, 0), 
+        new BackgroundObject('img/5.Fondo/Capas/1.suelo-fondo1/2.png', 5397, 0, 0)
     ],
     [
         new Bottle('img/6.botella/2.Botella_enterrada2.png', 700 + Math.random() * 200),

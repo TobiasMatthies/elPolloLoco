@@ -24,6 +24,8 @@ class Endboss extends MovableObject {
         'img/4.Secuencias_Enemy_gigantขn-Doคa_Gallinota-/4.Muerte/G26.png'
     ];
     energy = 99;
+    firstHit = true;
+
 
 
     constructor() {
@@ -37,7 +39,19 @@ class Endboss extends MovableObject {
 
     animate() {
         setInterval(() => {
-            this.playAnimation(this.IMAGES_ALERTED)
-        }, 200)
+            if (this.isAlive) {
+                if (!this.isHurt()) {
+                    this.playAnimation(this.IMAGES_ALERTED);
+                }
+            } else {
+                this.playAnimation(this.IMAGES_DYING);
+            }
+        }, 200);
+
+        setInterval(() => {
+            if (this.isAlive && this.isHurt()) {
+                this.playAnimation(this.IMAGES_HURT);
+            }
+        }, 200);
     }
 }

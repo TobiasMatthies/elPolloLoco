@@ -4,16 +4,23 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-image: url(./img/desert-night.jpg);
+    background-size: cover;
 }
 
 canvas {
     background-color: black;
+    display: block;
+    position: relative;
 }
 
-#intro_image {
+.fullscreen_image {
     height: 100vh;
     width: 100vw;
     position: absolute;
+}
+
+#intro_image {
     top: 0;
     left: 0;
     z-index: 1;
@@ -21,7 +28,7 @@ canvas {
 }
 
 .d-none {
-    display: none;
+    display: none !important;
 }
 
 #intro_span {
@@ -31,4 +38,78 @@ canvas {
     top: 70%;
     z-index: 2;
     font-family: 'Roboto', sans-serif;
+}
+
+.button_container {
+    position: absolute;
+    z-index: 1;
+    bottom: 3vh;
+    display: none;
+    gap: 2vh;
+}
+
+#left_button_container {
+    left: 3vh;
+}
+
+#right_button_container {
+    right: 3vh;
+}
+
+.mobile_button {
+   height: 16vh;
+   width: 16vh;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   background: rgb(255, 196, 0);
+   border-radius: 50%;
+   border: none;
+   opacity: 0.8;
+}
+
+.button_icon {
+    height: 12vh;
+    width: 12vh;
+}
+
+#attribution {
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    text-decoration: none;
+    z-index: 2;
+    opacity: 0.6;
+}
+
+#game_over_screen {
+    cursor: pointer;
+}
+
+@media (max-width: 1800px) {
+    canvas {
+        width: 100vw;
+    }
+
+    #intro_span {
+        font-size: 30px;
+    }
+}
+
+@media (max-height: 1000px) {
+   canvas {
+       height: 100vh;
+   }
+
+   #intro_span {
+       font-size: 30px;
+   }
+}
+
+@media (pointer: coarse) {
+    .button_container {
+        display: flex;
+    }
 }

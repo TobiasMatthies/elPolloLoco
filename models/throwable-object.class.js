@@ -3,6 +3,7 @@ class ThrowableObject extends MovableObject {
     width = 120;
     speed = 14;
     shatterSound = new Audio('audio/bottle.mp3');
+    hit = false;
 
     IMAGES_FLYING = [
         'img/6.botella/Rotaciขn/Mesa de trabajo 1 copia 3.png',
@@ -34,15 +35,20 @@ class ThrowableObject extends MovableObject {
 
 
     throw() {
+        let turnedAround;
         this.speedY = 18;
         this.applyGravity();
 
+        if (world.character.otherDirection) {
+            turnedAround = true;
+        }
+
         setInterval(() => {
             if (this.isAboveGround()) {
-                if (world.character.otherDirection) {
-                    this.x -= 10;
-                } else {
+                if (!turnedAround) {
                     this.x += 10;
+                } else {
+                    this.x -= 10;
                 }
             }
         }, 1000 / 60);
@@ -50,23 +56,25 @@ class ThrowableObject extends MovableObject {
 
 
     animate() {
-        let intervall = setInterval(() => {
+        let timeoutSet = false;
+
+        let interval = setInterval(() => {
             if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_FLYING);
             } else {
                 this.shatterSound.play();
                 this.playAnimation(this.IMAGES_SHATTERING);
 
-                setTimeout(() => {
-                    this.deleteObject(intervall);
-                }, 400);
+                if (!timeoutSet) {
+                    timeoutSet == true;
+
+                    setTimeout(() => {
+                        clearInterval(interval);
+                        world.throwableObjects.splice(0, 1);
+                        timeoutSet = true;
+                    }, 400);
+                }
             }
         }, 100);
-    }
-
-
-    deleteObject(intervall) {
-        clearInterval(intervall);
-        world.throwableObjects.pop();
     }
 }

@@ -8,10 +8,11 @@ class MovableObject extends DrawableObject {
     energy = 100;
     lastHit = 0;
     isAlive = true;
+    IMAGE_STANDING = new Image();
 
 
     constructor() {
-      super();
+        super();
     }
 
 
@@ -26,6 +27,10 @@ class MovableObject extends DrawableObject {
                 this.speedY -= this.acceleration;
             } else {
                 this.speedY = 0;
+                if (!keyboard.ArrowRight && !keyboard.ArrowLeft && !keyboard.Space && !this.isHurt() && this.isAlive) {
+                    this.currentImage = 0;
+                    this.img = this.IMAGE_STANDING;
+                }
             }
         }, 1000 / 60);
     }
@@ -37,7 +42,7 @@ class MovableObject extends DrawableObject {
      */
     isAboveGround() {
         if (this instanceof Character) {
-        return this.y < 449.9;
+            return this.y < 449.9;
         } else if (this instanceof ThrowableObject) {
             return this.y < 759.9;
         }
@@ -49,13 +54,13 @@ class MovableObject extends DrawableObject {
      * drawing blue border around objects for orientation
      * @param {context} ctx 
      */
-         drawBorder(ctx) {
-            ctx.lineWidth = '5';
-            ctx.beginPath();
-            ctx.strokeStyle = 'blue';
-            ctx.rect(this.x, this.y, this.width, this.height);
-            ctx.stroke();
-        }
+    drawBorder(ctx) {
+        ctx.lineWidth = '5';
+        ctx.beginPath();
+        ctx.strokeStyle = 'blue';
+        ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.stroke();
+    }
 
 
     /**
@@ -65,10 +70,9 @@ class MovableObject extends DrawableObject {
      * @returns object is colliding with enemy
      */
     isColliding(mo) {
-        return this.x + this.width > mo.x &&
-            this.y + this.height > mo.y &&
-            this.x < mo.x &&
-            this.y < mo.y + mo.height;
+        return (this.x + this.width) >= mo.x && this.x <= (mo.x + mo.width) &&
+            (this.y + this.height) >= mo.y &&
+            this.y <= (mo.y + mo.height);
     }
 
 
@@ -120,7 +124,11 @@ class MovableObject extends DrawableObject {
      */
     hit() {
         if (this.energy > 0) {
-            this.energy -= 5;
+            if (this instanceof Character) {
+                this.energy -= 5;
+            } else if (this instanceof Endboss) {
+                this.energy -= 33;
+            }
             this.lastHit = new Date().getTime();
         }
     }
@@ -133,6 +141,11 @@ class MovableObject extends DrawableObject {
     isHurt() {
         let timePassed = new Date().getTime() - this.lastHit; //time passed in ms
         timePassed = timePassed / 1000; //time passed in seconds
-        return timePassed < 0.5;
+
+        if (this instanceof Character) {
+            return timePassed < 0.5;
+        } else if (this instanceof Endboss) {
+            return timePassed < 1.5;
+        }
     }
 }

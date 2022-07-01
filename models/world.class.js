@@ -10,6 +10,7 @@ class World {
     coinBar = new CoinBar(180);
     throwableObjects = [];
     coinCollectSound = new Audio('audio/coin.mp3');
+    throwPause = true;
 
 
     constructor(canvas, keyboard) {
@@ -37,11 +38,13 @@ class World {
      */
     checkCollisions() {
         setInterval(() => {
-            this.checkCollisionsEnemies();
-            this.checkCollectingCoins();
-            this.checkCollectingBottles();
-            this.checkThrow();
-            this.checkBottleHit();
+            if (this.level.enemies) {
+                this.checkCollisionsEnemies();
+                this.checkCollectingCoins();
+                this.checkCollectingBottles();
+                this.checkThrow();
+                this.checkBottleHit();
+            }
         }, 200);
     }
 
@@ -76,11 +79,10 @@ class World {
 
         if (enemy instanceof Chicken || enemy instanceof Chick) {
             enemy.img = enemy.IMAGE_DYING;
+            setTimeout(this.removeDeadEnemies, 2000, this);
         } else {
-            enemy.playAnimation(enemy.IMAGES_DYING);
+            setTimeout(this.removeDeadEnemies, 3000, this);
         }
-
-        setTimeout(this.removeDeadEnemies, 2000, this);
     }
 
 
@@ -123,26 +125,26 @@ class World {
      * check if the bottle hits an enemy
      */
     checkBottleHit() {
-        this.level.enemies.forEach((e) => {
-            if (this.throwableObjects.length > 0) {
-                let bottle = this.throwableObjects[0];
+        for (let i = 0; i < this.throwableObjects.length; i++) {
+            const bottle = this.throwableObjects[i];
+            
+            this.level.enemies.forEach((e) => {
+                if (e.isColliding(bottle)) {
+                   if (e instanceof Chicken || e instanceof Chick) {
+                       this.killEnemy(e);
+                   } else if (e instanceof Endboss) {
+                       if (e.energy > 0 && !bottle.hit) {
+                            bottle.hit = true;
+                           e.hit();
+                       } else if (e.energy == 0 && !bottle.hit) {
+                           this.killEnemy(e);
 
-                if (bottle.isColliding(e)) {
-
-                    if (e instanceof Chicken || e instanceof Chick) {
-                        this.killEnemy(e);
-                    } else {
-
-                        if (e.energy > 0) {
-                            e.energy -= 33;
-                        } else {
-                            this.killEnemy(e);  
-                        }
-
-                    }
+                           setTimeout(() => { this.level.enemies = undefined; }, 2000);
+                       }
+                   }
                 }
-            }
-        })
+            })
+        }
     }
 
 
@@ -153,18 +155,21 @@ class World {
     checkThrow() {
         if (this.keyboard.KeyD && this.character.bottles > 19) {
 
-            if (this.throwableObjects.length == 0) {
+            if (this.throwPause) {
+                this.throwPause = false;
                 this.throwableObjects.push(new ThrowableObject(this.character.x, this.character.y));
                 this.character.bottles -= 20;
                 this.bottleBar.setPercentage(this.character.bottles, this.bottleBar.IMAGES);
-
             }
+        } else if (this.level.bottles.length == 0 && this.character.bottles < 19) {
+            setTimeout(() => { this.level.enemies = undefined; }, 2000);
         }
     }
 
-
     removeDeadEnemies(world) {
-        world.level.enemies = world.level.enemies.filter((e) => e.isAlive);
+        if (world.level.enemies) {
+            world.level.enemies = world.level.enemies.filter((e) => e.isAlive);
+        }
     }
 
 
@@ -186,15 +191,13 @@ class World {
         this.addToMap(this.healthBar);
         this.addToMap(this.coinBar);
         this.ctx.translate(this.camera_x, 0);
-
-        /*if (this.throwableObject) {
-            this.addToMap(this.throwableObject);
-        }*/
-
+        //----- space for fixed objects end -----
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.bottles);
         this.addToMap(this.character);
-        this.addObjectsToMap(this.level.enemies)
+        if (this.level.enemies) {
+            this.addObjectsToMap(this.level.enemies);
+        }
         this.addObjectsToMap(this.throwableObjects);
         this.ctx.translate(-this.camera_x, 0);
 
