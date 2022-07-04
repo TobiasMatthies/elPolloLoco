@@ -56,7 +56,7 @@ class World {
      */
     checkCollisionsEnemies() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && this.character.speedY > -0.1 && enemy.isAlive) {
+            if (this.character.isColliding(enemy) && this.character.speedY > -0.1 && enemy.isAlive && !this.character.isHurt()) {
                 this.character.hit();
                 this.healthBar.setPercentage(this.character.energy, this.healthBar.IMAGES);
 
