@@ -81,5 +81,6 @@ function addMobileButtonsEventListeners() {
     document.getElementById('throw').addEventListener('touchend', (e) => {
         e.preventDefault();
         keyboard.KeyD = false;
+        world.throwPause = true;
     });
 }

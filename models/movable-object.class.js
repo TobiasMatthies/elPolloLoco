@@ -13,6 +13,7 @@ class MovableObject extends DrawableObject {
 
     constructor() {
         super();
+        this.jumping_sound.volume = 0.5;
     }
 
 
@@ -28,8 +29,10 @@ class MovableObject extends DrawableObject {
             } else {
                 this.speedY = 0;
                 if (!keyboard.ArrowRight && !keyboard.ArrowLeft && !keyboard.Space && !this.isHurt() && this.isAlive) {
-                    this.currentImage = 0;
-                    this.img = this.IMAGE_STANDING;
+                    if (this instanceof Character) {
+                        this.currentImage = 0;
+                        this.img = this.IMAGE_STANDING;
+                    }
                 }
             }
         }, 1000 / 60);

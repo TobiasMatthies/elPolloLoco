@@ -33,13 +33,13 @@
 </head>
 
 <body onload="animateIntroSpan()">
-    <span onclick="init()" id="intro_span">Click anywhere to start</span>
+    <span  onclick="init()" id="intro_span">Click anywhere to start</span>
     <img onclick="init()" class="fullscreen_image" id="intro_image"
         src="img/9.Intro _ Outro Image/Start Screen/Opciขn 1.png">
 
     <canvas id="canvas" height="1000" width="1800"></canvas>
 
-    <div class="button_container" id="left_button_container">
+    <div class="button_container d-none" id="left_button_container">
         <button class="mobile_button" id="left">
             <img class="button_icon" src="./img/left.svg">
         </button>
@@ -49,7 +49,7 @@
         </button>
     </div>
 
-    <div class="button_container" id="right_button_container">
+    <div class="button_container d-none" id="right_button_container">
         <button class="mobile_button" id="jump">
             <img class="button_icon" src="./img/jump.svg">
         </button>
@@ -65,6 +65,17 @@
 
 
     <a id="attribution" href="https://www.freepik.com/vectors/desert">Desert vector created by upklyak - www.freepik.com</a>
+
+    <button onclick="showHelp()" id="help_button">¿?</button>
+
+    <div onclick="hideHelp()" class="d-none" id="help_container">
+      <div id="help">
+          <span>right: right arrow key</span>
+          <span>left: left arrow key</span>
+          <span>jump: space key</span>
+          <span>throw: d-key</span>
+      </div>
+    </div>
 </body>
 
 </html>

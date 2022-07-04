@@ -31,6 +31,7 @@ class ThrowableObject extends MovableObject {
         this.y = y;
         this.throw(100, 500);
         this.animate();
+        this.shatterSound.volume = 0.5;
     }
 
 
@@ -62,18 +63,19 @@ class ThrowableObject extends MovableObject {
             if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_FLYING);
             } else {
-                this.shatterSound.play();
-                this.playAnimation(this.IMAGES_SHATTERING);
-
                 if (!timeoutSet) {
-                    timeoutSet == true;
+                    timeoutSet = true;
+                    this.shatterSound.play();
+                    this.currentImage = 0;
 
                     setTimeout(() => {
                         clearInterval(interval);
-                        world.throwableObjects.splice(0, 1);
-                        timeoutSet = true;
+                        let index = world.throwableObjects.indexOf(this); 
+                        world.throwableObjects.splice(index, 1);
                     }, 400);
                 }
+
+                this.playAnimation(this.IMAGES_SHATTERING);
             }
         }, 100);
     }

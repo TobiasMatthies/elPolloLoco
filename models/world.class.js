@@ -20,6 +20,7 @@ class World {
         this.draw();
         this.setWorld();
         this.checkCollisions();
+        this.coinCollectSound.volume = 0.3;
     }
 
 

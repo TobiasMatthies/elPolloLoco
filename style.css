@@ -57,15 +57,15 @@ canvas {
 }
 
 .mobile_button {
-   height: 16vh;
-   width: 16vh;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   background: rgb(255, 196, 0);
-   border-radius: 50%;
-   border: none;
-   opacity: 0.8;
+    height: 16vh;
+    width: 16vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(255, 196, 0);
+    border-radius: 50%;
+    border: none;
+    opacity: 0.8;
 }
 
 .button_icon {
@@ -75,8 +75,8 @@ canvas {
 
 #attribution {
     position: absolute;
-    left: 5px;
-    bottom: 5px;
+    left: 0;
+    bottom: 0;
     color: white;
     font-family: 'Roboto', sans-serif;
     text-decoration: none;
@@ -84,8 +84,54 @@ canvas {
     opacity: 0.6;
 }
 
+#help_button {
+    height: 60px;
+    width: 60px;
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    color: white;
+    background-color: rgb(238, 177, 63);
+    border: 1px solid black;
+    border-radius: 50%;
+    font-size: 24px;
+    font-family: 'Roboto', sans-serif;
+    z-index: 2;
+}
+
+#help_button:hover {
+    transforM: scale(1.1);
+}
+
 #game_over_screen {
     cursor: pointer;
+}
+
+#help_container {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    z-index: 4;
+}
+
+#help {
+    padding: 20px;
+    height: 50vh;
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    position: absolute;
+    top: 25vh;
+    left: 25vw;
+    color: white;
+    background-color: rgba(238, 177, 63, 0.8);
+    border-radius: 20px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 40px;
+    cursor: auto;
 }
 
 @media (max-width: 1800px) {
@@ -99,17 +145,21 @@ canvas {
 }
 
 @media (max-height: 1000px) {
-   canvas {
-       height: 100vh;
-   }
+    canvas {
+        height: 100vh;
+    }
 
-   #intro_span {
-       font-size: 30px;
-   }
+    #intro_span {
+        font-size: 30px;
+    }
 }
 
 @media (pointer: coarse) {
     .button_container {
         display: flex;
+    }
+
+    #help_button {
+        display: none;
     }
 }
