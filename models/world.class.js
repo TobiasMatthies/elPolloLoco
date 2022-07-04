@@ -46,7 +46,7 @@ class World {
                 this.checkThrow();
                 this.checkBottleHit();
             }
-        }, 200);
+        }, 1000 / 60);
     }
 
 
