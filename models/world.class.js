@@ -17,7 +17,7 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
-        this.draw();
+        this.drawObjects();
         this.setWorld();
         this.checkCollisions();
         this.coinCollectSound.volume = 0.3;
@@ -128,21 +128,21 @@ class World {
     checkBottleHit() {
         for (let i = 0; i < this.throwableObjects.length; i++) {
             const bottle = this.throwableObjects[i];
-            
+
             this.level.enemies.forEach((e) => {
                 if (e.isColliding(bottle)) {
-                   if (e instanceof Chicken || e instanceof Chick) {
-                       this.killEnemy(e);
-                   } else if (e instanceof Endboss) {
-                       if (e.energy > 0 && !bottle.hit) {
+                    if (e instanceof Chicken || e instanceof Chick) {
+                        this.killEnemy(e);
+                    } else if (e instanceof Endboss) {
+                        if (e.energy > 0 && !bottle.hit) {
                             bottle.hit = true;
-                           e.hit();
-                       } else if (e.energy == 0 && !bottle.hit) {
-                           this.killEnemy(e);
+                            e.hit();
+                        } else if (e.energy == 0 && !bottle.hit) {
+                            this.killEnemy(e);
 
-                           setTimeout(() => { this.level.enemies = undefined; }, 2000);
-                       }
-                   }
+                            setTimeout(() => { this.level.enemies = undefined; }, 2000);
+                        }
+                    }
                 }
             })
         }
@@ -178,7 +178,7 @@ class World {
      * 
      * this function is used to draw all the elements
      */
-    draw() {
+    drawObjects() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.ctx.translate(this.camera_x, 0);
@@ -204,7 +204,7 @@ class World {
 
         let self = this;
         requestAnimationFrame(function () {
-            self.draw();
+            self.drawObjects();
         });
     }
 

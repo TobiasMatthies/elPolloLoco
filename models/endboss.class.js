@@ -25,6 +25,9 @@ class Endboss extends MovableObject {
     ];
     energy = 99;
     firstHit = true;
+    offsetTop = 80;
+    offsetLeft = 20;
+    offsetRight = 10;
 
 
 

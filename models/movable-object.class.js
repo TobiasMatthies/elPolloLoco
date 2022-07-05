@@ -54,28 +54,14 @@ class MovableObject extends DrawableObject {
 
     /**
      * 
-     * drawing blue border around objects for orientation
-     * @param {context} ctx 
-     */
-    drawBorder(ctx) {
-        ctx.lineWidth = '5';
-        ctx.beginPath();
-        ctx.strokeStyle = 'blue';
-        ctx.rect(this.x, this.y, this.width, this.height);
-        ctx.stroke();
-    }
-
-
-    /**
-     * 
      * checking if object is colliding with enemy
      * @param {object} mo 
      * @returns object is colliding with enemy
      */
     isColliding(mo) {
-        return (this.x + this.width) >= mo.x && this.x <= (mo.x + mo.width) &&
-            (this.y + this.height) >= mo.y &&
-            this.y <= (mo.y + mo.height);
+        return (this.x + this.width - this.offsetRight) >= (mo.x + mo.offsetLeft) && (this.x - this.offsetLeft) <= (mo.x + mo.width - mo.offsetRight) &&
+            (this.y + this.height - this.offsetBottom) >= (mo.y + mo.offsetTop) &&
+            (this.y + this.offsetTop) <= (mo.y + mo.height - mo.offsetBottom);
     }
 
 
